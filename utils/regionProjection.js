@@ -1,32 +1,51 @@
 class RegionProjection {
-	async project(events) {
-		const projection = events.reduce(applyEventToRegion, { items: {} });
+	project(events) {
+		const projection = events.reduce(applyEventToRegion, { visitas: {}, fallecimientos: {}, medicamentos: {} });
 		return projection;
 
 		function applyEventToRegion(region, event) {
 			const { type } = event;
-			type === 'add' ? addEvent(region, event) : removeEvent(region, event);
-			return cart;
+			const eventMapper = {
+				['fallecimiento']: addFallecimiento,
+				['visita']: addVisita,
+				['medicamento']: addMedicamento
+			}
+			return eventMapper[type](region, event);
 		}
 
-		function addEvent(region, event) {
-			// if (cart.items[event.item]) {
-			// 	cart.items[event.item].qty++;
-			// } else {
-			// 	cart.items[event.item] = {
-			// 		qty: 1,
-			// 	};
-			// }
+		function addFallecimiento(region, event) {
+			if (region.fallecimientos[event.payload.motivo]) {
+				region.fallecimientos[event.payload.motivo].qty++;
+			} else {
+				region.fallecimientos[event.payload.motivo] = {
+					qty: 1,
+				};
+			}
+			return region;
 		}
 
-		function removeEvent(region, event) {
-			// if (cart.items?.[event.item].qty == 1) {
-			// 	delete cart.items[event.item];
-			// } else if (cart.items[event.item].qty > 1) {
-			// 	cart.items[event.item].qty--;
-			// }
+		function addVisita(region, event) {
+			if (region.visitas[event.payload.motivo]) {
+				region.visitas[event.payload.motivo].qty++;
+			} else {
+				region.visitas[event.payload.motivo] = {
+					qty: 1,
+				};
+			}
+			return region;
+		}
+
+		function addMedicamento(region, event) {
+			if (region.medicamentos[event.payload.medicamento]) {
+				region.medicamentos[event.payload.medicamento].qty++;
+			} else {
+				region.medicamentos[event.payload.medicamento] = {
+					qty: 1,
+				};
+			}
+			return region;
 		}
 	}
 }
 
-module.exports = Projection;
+module.exports = RegionProjection;

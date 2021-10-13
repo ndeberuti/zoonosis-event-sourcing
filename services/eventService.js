@@ -4,10 +4,10 @@ class EventServices {
 		this.projection = projection;
 	}
 
-	getEvent(clientId) {
+	getEvent(eventId) {
 		let query;
-		if (clientId) {
-			query = Events.find({ clientId: clientId }).exec();
+		if (eventId) {
+			query = Events.find({ eventId }).exec();
 		} else {
 			query = Events.find().exec();
 		}
@@ -26,8 +26,14 @@ class EventServices {
 	}
 
 
-	async getregionProjection(id) {
-		const events = await Events.find({ regionId: id }).exec();
+	async getRegionProjection(regionId, upTo) {
+		let events;
+		if (upTo) {
+			events = await Events.find({ regionId }).where('eventId').lt(upTo).exec();
+		} else {
+			events = await Events.find({ regionId }).exec();
+		}
+
 		const projection = this.projection.project(events);
 		return projection;
 	}

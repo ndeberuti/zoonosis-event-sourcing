@@ -4,7 +4,7 @@ class EventController {
 	}
 	async getEvent(req, res) {
 		try {
-			const { eventId } = req.query;
+			const { eventId } = req.params;
 			const event = await this.eventServices.getEvent(eventId);
 			res.status(200).json(event);
 		} catch (error) {
@@ -24,8 +24,8 @@ class EventController {
 
 	async getRegionProjection(req, res) {
 		try {
-			const { id } = req.params;
-			const event = await this.eventServices.getRegionProjection(id);
+			const { id, upTo } = req.params;
+			const event = await this.eventServices.getRegionProjection(id, upTo);
 			res.status(200).json(event);
 		} catch (error) {
 			res.status(500).json(error);
@@ -34,13 +34,16 @@ class EventController {
 
 	async postEvent(req, res) {
 		const { body } = req;
-		const { petId, type, item } = body;
+		const { eventId, petId, regionId, type, payload } = body;
 
 		const event = {
+			eventId,
 			petId,
+			regionId,
 			type,
-			item,
+			payload,
 		};
+
 		try {
 			await this.eventServices.postEvent(event);
 			res.status(200).json('Added Event!');

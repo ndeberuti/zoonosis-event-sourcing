@@ -1,18 +1,23 @@
+/* eslint-disable no-unused-vars */
 const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+const mongoose = require('mongoose');
+const config = require('config');
+const { bind } = require('./routes');
 
-const indexRouter = require('./routes/index');
+const { user, password, domain } = config.get('db');
+mongoose
+    .connect(
+        `mongodb+srv://${user}:${password}@${domain}/zoonosis?retryWrites=true&w=majority`,
+        { useUnifiedTopology: true, useNewUrlParser: true },
+    );
+const { connection } = mongoose;
+connection.once('open', () => {
+    console.log('MongoDB database connection established successfully');
+});
 
+const { port } = config.get('server');
 const app = express();
-
-app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+bind(app);
 
-app.use('/', indexRouter);
-
-module.exports = app;
+module.exports = app.listen(port);
