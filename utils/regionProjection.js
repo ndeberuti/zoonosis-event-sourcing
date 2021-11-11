@@ -21,7 +21,8 @@ class RegionProjection {
 					qty: 1,
 				};
 			}
-			return region;
+
+			return addQtyEvento(region);
 		}
 
 		function addVisita(region, event) {
@@ -32,7 +33,7 @@ class RegionProjection {
 					qty: 1,
 				};
 			}
-			return region;
+			return addQtyEvento(region);
 		}
 
 		function addMedicamento(region, event) {
@@ -42,6 +43,15 @@ class RegionProjection {
 				region.medicamentos[event.payload.medicamento] = {
 					qty: 1,
 				};
+			}
+			return addQtyEvento(region);
+		}
+
+		function addQtyEvento(region) {
+			if (region.qtyEvento) {
+				region.qtyEvento++;
+			} else {
+				region.qtyEvento = 1;
 			}
 			return region;
 		}

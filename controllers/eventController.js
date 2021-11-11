@@ -12,16 +12,6 @@ class EventController {
 		}
 	}
 
-	async getPetProjection(req, res) {
-		try {
-			const { id } = req.params;
-			const event = await this.eventServices.getPetProjection(id);
-			res.status(200).json(event);
-		} catch (error) {
-			res.status(500).json(error);
-		}
-	}
-
 	async getRegionProjection(req, res) {
 		try {
 			const { id, upTo } = req.params;

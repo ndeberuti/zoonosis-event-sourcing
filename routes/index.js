@@ -14,10 +14,6 @@ const bind = (app) => {
 		EventInstance.getEvent(req, res);
 	});
 
-	app.get('/pet/:id', (req, res) => {
-		EventInstance.getPetProjection(req, res);
-	});
-
 	app.get('/region/:id/upTo/:upTo', (req, res) => {
 		EventInstance.getRegionProjection(req, res);
 	});

@@ -19,13 +19,6 @@ class EventServices {
 		return newEvent.save();
 	}
 
-	async getPetProjection(id) {
-		const events = await Events.find({ petId: id }).exec();
-		const projection = this.projection.project(events);
-		return projection;
-	}
-
-
 	async getRegionProjection(regionId, upTo) {
 		let events;
 		if (upTo) {
