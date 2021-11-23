@@ -1,0 +1,10 @@
+{
+    "server": {
+        "port": 3001
+    },
+    "db": {
+        "user": "user",
+        "password": "pass",
+        "domain": "domain"
+    }
+}
