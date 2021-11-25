@@ -54,6 +54,6 @@ A continuación se presenta una lista de los endpoints de la aplicación, los cu
 
 * [GET] **/region/\<idRegion\>** --> Obtiene la proyeccion de una region
 
-* [GET] **/region/\<idRegionDesde\>/upTo/\<idRegionHasta\>** --> Obtiene proyecciones desde el 'id' de region indicado ('idRegionDesde') hasta un máximo ('idRegionHasta')
+* [GET] **/region/\<idRegion\>/upTo/\<idEventoHasta\>** --> Obtiene proyecciones deel 'id' de region indicado ('idRegion) hasta un evento máximo ('idEventoMax')
 
 Para poder acceder a estos endpoints se aconseja utilizar un cliente REST como 'Postman'
